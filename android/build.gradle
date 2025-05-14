@@ -9,10 +9,10 @@ buildscript {
         maven {
             url 'https://maven.google.com'
         }
-        maven {
-            url "http://jcenter.bintray.com"
-            allowInsecureProtocol = true
-        }
+        // Removed insecure jcenter bintray repo (deprecated)
+        // jcenter() will fall back to safe mirror if needed
+        jcenter()
+        
     }
 
     dependencies {
@@ -32,9 +32,11 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
     lintOptions {
         abortOnError false
     }
+
     sourceSets {
         main {
             aidl.srcDirs = ['src/main/java']
@@ -43,13 +45,19 @@ android {
 }
 
 repositories {
-    jcenter { url "http://jcenter.bintray.com/" }
-    maven {url "http://repo.spring.io/plugins-release/"}
+    google()
     mavenCentral()
+    jcenter()
+
+    maven {
+        url "https://repo.spring.io/plugins-release/"
+    }
+
     maven {
         // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
         url "$rootDir/../node_modules/react-native/android"
     }
+
     maven {
         url 'https://maven.google.com'
     }
@@ -61,3 +69,4 @@ dependencies {
     implementation group: 'com.android.support', name: 'support-v4', version: '27.0.0'
     implementation "com.google.zxing:core:3.3.0"
 }
+
